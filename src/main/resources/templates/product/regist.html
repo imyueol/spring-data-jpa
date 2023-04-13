@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>regist</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<body>
+
+	<h3 align="center">신규 메뉴 등록</h3>
+	
+	<form action="/product/regist" method="post">
+		<label>상품 카테고리 : </label>
+		<select name="productCategory" id="productCategory">
+			<!-- 
+				카테고리 내용이 변화할 수 있다면 조회 해서 처리해야 하며
+				여기에서는 ajax로 처리
+			 -->
+		</select><br>
+		<label>상품 코드 : </label><input type="text" name="productCodeName"><br>
+		<label>상품명 : </label><input type="text" name="productName"><br>
+		<label>상품 가격 : </label><input type="number" name="productPrice"><br>
+		<label>출시일 : </label><input type="date" name="releaseDate"><br>
+		<input type="submit" value="전송">
+	</form>
+	
+	<script>
+		
+	$(function(){
+		$.ajax({
+			url : '/product/kind',
+			success : function(data) {
+				console.log(data);
+				
+				let html = '';
+				
+				for(let index in data) {
+					html += `<option value='${data[index].categoryName}'>${data[index].categoryName}</option>`;
+				}
+				
+				document.querySelector("#productCategory").insertAdjacentHTML('beforeend', html);
+				
+			},
+			error : function(xhr) {
+				console.log(xhr);
+			}
+		});
+	});
+	
+	</script>
+	
+</body>
+</html>
